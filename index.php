@@ -4,24 +4,34 @@ require_once("./head.php");
 $logged = false; 
 
 session_start();
-$username = (!empty($_SESSION)) ? $_SESSION["username"] : (!empty($_COOKIE) ? $_COOKIE["username"] : "");
+$username = (!empty($_SESSION)) ? $_SESSION["username"] : ((isset($_COOKIE["username"])) ? $_COOKIE["username"] : "");
 
 if(isset($_GET["logout"]) && $_GET["logout"] == true){
   $_SESSION["username"] = null;
+  $_COOKIE["username"] = null;
   setcookie("username","",time()-300);
   $logged = false;
 }
 
 if(!empty($_POST)){
   $userInfo = $user->getUser($_POST["username"]);
-  print_r($_POST);
   if(password_verify($_POST["password"],$userInfo["password"])){
     $username = $userInfo["user"];
     $_SESSION["username"] = $username;
     $logged = true;
-    if(isset($_POST["remember"]) && $_POST["remember"] == true) setcookie("username",$username,time()+300);
+    if(isset($_POST["remember"]) && $_POST["remember"] == true){
+      echo "Setting cookie...<br>";
+      setcookie("username",$username,time()+300);
+    }
   }
 }
+echo $logged;
+echo "<br>";
+print_r($_POST);
+echo "<br>";
+print_r($_SESSION);
+echo "<br>";
+print_r($_COOKIE);
 
 
 ?>
