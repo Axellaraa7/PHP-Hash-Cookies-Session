@@ -1,12 +1,14 @@
-const d = document;
+const d = document,
+registerForm = d.getElementById("registerForm"),
+alertDiv = d.createElement("div");
 
 const inicio = () => {
   let filename = location.pathname.split("/").pop().slice(0,-4);
   switch(filename){
     case "index":
       break;
-    case "register":
-      d.addEventListener("submit",(e) => checkPassword(e),false);
+    case "login":
+      d.addEventListener("submit",checkPassword,false);
       break;
     default:
       console.log("default");
@@ -19,8 +21,10 @@ const checkPassword = (e) => {
   confirmPassword = d.getElementById("confirmPassword").value;
   if(password !== confirmPassword){
     e.preventDefault();
-    console.log("NO COINCIDEN LOS PASSWORDS");
-  }else{ e.target.submit(); console.log("COINCIDEN");}
+    alertDiv.textContent = "Las contraseñas no coinciden";
+    ["alert","redAlert"].forEach(style => alertDiv.classList.add(style));    
+    registerForm.insertAdjacentElement("beforebegin",alertDiv);
+  }else e.target.submit();
 }
 
 d.addEventListener("DOMContentLoaded",inicio,false);

@@ -12,6 +12,8 @@
   --third: hsla(273,100%,22%,1);
   --fourth: hsla(279,100%,29%,1);
   --white: hsla(0,0%,82%,1);
+  --red: hsla(0,100%,75%,1);
+  --red2: hsla(0,100%,35%,1);
 }
 
 body{
@@ -24,6 +26,12 @@ header{
   justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
+}
+
+header>section{
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 2px;
 }
 
 .title{
@@ -95,6 +103,15 @@ aside{
 .registerContainer div:last-child{
   align-self: center;
 }
+
+/* - Index - */
+.logged{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 3rem;
+  border: 2px solid white;
+}
 /* - Utils */
 
 .bgsText{ font-size: 3rem; }
@@ -143,6 +160,19 @@ aside{
   width: 100%;
   padding: .2rem .4rem;
   font-size: 1.4rem;
+}
+
+.alert{
+  width: 100%;
+  padding: .5rem 1rem;
+  font-size: 1.2rem;
+  border-radius: 5px;
+}
+
+.redAlert{
+  border: 2px solid var(--red2);
+  background-color: var(--red);
+  color: var(--red2);
 }
 
 .btn{
@@ -210,6 +240,7 @@ aside{
   header{
     flex-wrap: wrap;
     justify-content: center;
+    gap: 5rem;
   }
   main{
     justify-content: center;

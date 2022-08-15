@@ -11,13 +11,12 @@ if (isset($_GET["logout"]) && $_GET["logout"] == true) {
 
 $username = (isset($_SESSION)) ? $_SESSION["username"] : ((isset($_COOKIE["username"])) ? $_COOKIE["username"] : "");
 
-if($username == "") header("Location: ./login.php");
+// if($username == "") header("Location: ./login.php");
 
 ?>
 <section class="logged">
-  <div>
-    <h1>¡Hola <?php echo $username; ?> !</h1>
-  </div>
-  <a href="./index.php?logout=true">Cerrar sesión</a>
+  <h1 class="bgText white bold">¡Hola <?php echo $username; ?> !</h1>
+  <a href="./index.php?logout=true" class="btn btnThird">Cerrar sesión</a>
 </section>
+
 <?php require_once("./footer.php"); ?>

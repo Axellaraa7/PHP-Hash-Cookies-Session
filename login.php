@@ -2,12 +2,11 @@
 require_once("./head.php");
 
 session_start();
-
 if(!empty($_POST)){
 
   if(isset($_POST["login"])){
     $userInfo = $user->getUser($_POST["username"]);
-    if(!$userInfo) $alert = "La contraseña o el usuario no coinciden";
+    if(!$userInfo) $alertLogin = "La contraseña o el usuario no coinciden";
     else{
       if (password_verify($_POST["password"], $userInfo["password"])) {
         $username = $userInfo["user"];
@@ -21,8 +20,8 @@ if(!empty($_POST)){
 
   if(isset($_POST["signup"])){
     $ban = $user->insertUser($_POST);
-    if($ban === -1) $alert = "El nombre de usuario o el email no están disponibles";
-    else if($ban === 0) $alert = "Ocurrió un error al ingresar el usuario";
+    if($ban === -1) $alertSign = "El nombre de usuario o el email no están disponibles";
+    else if($ban === 0) $alertSign = "Ocurrió un error al ingresar el usuario";
     else{
       $_SESSION["username"] = $_POST["username"];
       $_SESSION["logged"] = 1;
@@ -34,24 +33,27 @@ if(!empty($_POST)){
 ?>
 <header>
   <h1 class="bgsText white ">LOGIN-SESSION-COOKIES-CIFRADO</h1>
-  <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="post" class="loginContainer" id="formLogin">
-    <div class="ilContainerCol loginInput">
-      <label for="username" class="smText white">Username or email</label>
-      <input type="text" name="username" id="username" class="inputText">
-    </div>
-    <div class="ilContainerCol loginInput">
-      <label for="password" class="smText white">Password</label>
-      <input type="password" name="password" id="password" class="inputText">
-    </div>
-    <div class="ilContainerCol loginInput">
-      <label for="remember" class="smText white">Remember me</label>
-      <input type="checkbox" name="remember" id="remember" class="inputBox">
-    </div>
-    <div class="ilContainerCol loginInput">
-      <input type="hidden" name="login" value="true">
-      <button class="btn btnThird">Log In</button>
-    </div>
-  </form>
+  <section>
+    <?php if(isset($alertLogin)) echo "<div class='alert redAlert'> $alertLogin </div>"; ?>
+    <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="post" class="loginContainer" id="formLogin">
+      <div class="ilContainerCol loginInput">
+        <label for="username" class="smText white">Username or email</label>
+        <input type="text" name="username" id="username" class="inputText" required>
+      </div>
+      <div class="ilContainerCol loginInput">
+        <label for="password" class="smText white">Password</label>
+        <input type="password" name="password" id="password" class="inputText" required>
+      </div>
+      <div class="ilContainerCol loginInput">
+        <label for="remember" class="smText white">Remember me</label>
+        <input type="checkbox" name="remember" id="remember" class="inputBox">
+      </div>
+      <div class="ilContainerCol loginInput">
+        <input type="hidden" name="login" value="true">
+        <button class="btn btnThird">Log In</button>
+      </div>
+    </form>
+  </section>
 </header>
 <main>
   <aside>
@@ -71,21 +73,17 @@ if(!empty($_POST)){
   </aside>
   <section>
     <h2 class="bgText white bold">Sign Up</h2>
-    <?php if (isset($ban) && $ban <= 0) { ?>
-      <div class="alert">
-        <?php echo $alert ?>
-      </div>
-    <?php } ?>
-    <form action="" method="post" class="registerContainer">
+    <?php if (isset($ban) && $ban <= 0) echo "<div class='alert redAlert'> $alertSign </div>"; ?>
+    <form action="" method="post" class="registerContainer" id="registerForm">
       <div class="twoInputContainerRow">
-        <input type="text" name="username" id="username" placeholder="Type a username" class="inputText">
-        <input type="email" name="email" id="email" placeholder="Type a email" class="inputText">
+        <input type="text" name="username" id="username" placeholder="Type a username" class="inputText" required>
+        <input type="email" name="email" id="email" placeholder="Type a email" class="inputText" required>
       </div>
       <div>
-        <input type="password" name="password" id="password" placeholder="Type a password" class="inputText">
+        <input type="password" name="password" id="password" placeholder="Type a password" class="inputText" required>
       </div>
       <div>
-        <input type="password" name="confirmPassword" id="confirmPassword" placeholder="Confirm the password" class="inputText">
+        <input type="password" name="confirmPassword" id="confirmPassword" placeholder="Confirm the password" class="inputText" required>
       </div>
       <div>
         <input type="hidden" name="signup" value="signup">
