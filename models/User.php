@@ -17,24 +17,25 @@ class User{
   }
 
   public function getUser($username){
-    $query = $this->conexion->prepare("SELECT user,password FROM $this->table WHERE user = ? OR email = ?");
-    $banExecute = $query->execute(array($username,$username));
-    if(!$banExecute) return false;
-    return $query->fetch(PDO::FETCH_ASSOC);
+    $user = ($this->verifyUsername($username) || $this->verifyEmail($username)) ? true : false;
+    $banExecute = false;
+    if($user){
+      $query = $this->conexion->prepare("SELECT user,password FROM $this->table WHERE user = ? OR email = ?");
+      $banExecute = $query->execute(array($username,$username));
+    }
+    return ($user && $banExecute) ? $query->fetch(PDO::FETCH_ASSOC) : $user;
   }
 
   private function verifyUsername($username){
     $query = $this->conexion->prepare("SELECT count(*) FROM $this->table WHERE user = ?");
     $banExecute = $query->execute(array($username));
-    if($query->fetchColumn() > 0 || !$banExecute) return false;
-    return true;
+    return ($query->fetchColumn() > 0 || !$banExecute) ? false : true;
   }
   
   private function verifyEmail($email){
     $query = $this->conexion->prepare("SELECT count(*) FROM $this->table WHERE email = ?");
     $banExecute = $query->execute(array($email));
-    if($query->fetchColumn() > 0 || !$banExecute) return false;
-    return true;
+    return ($query->fetchColumn() > 0 || !$banExecute) ? false : true;
   }
 }
 ?>

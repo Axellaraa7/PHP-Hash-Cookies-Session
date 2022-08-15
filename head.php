@@ -11,7 +11,7 @@ $user = new User($conexion);
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@200&display=swap" rel="stylesheet"> 
+  <link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@1&display=swap" rel="stylesheet"> 
   <?php 
     $scriptName = explode("/",$_SERVER["SCRIPT_NAME"]); 
     $fileName = substr(array_pop($scriptName),0,-4);
