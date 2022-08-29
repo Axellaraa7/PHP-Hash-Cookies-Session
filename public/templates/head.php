@@ -1,8 +1,8 @@
 <?php 
-require_once("./db/Conexion.php");
-require_once("./models/User.php");
+require_once(realpath(__DIR__."/../../db/DBConnection.php"));
+require_once(realpath(__DIR__."/../../models/User.php"));
 
-$conexion = Conexion::getInstance("pruebasconexion")->getConexion();
+$conexion = DBConnection::getInstance()->getConexion();
 $user = new User($conexion);
 ?>
 <!DOCTYPE html>

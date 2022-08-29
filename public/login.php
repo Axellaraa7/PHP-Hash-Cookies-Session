@@ -1,14 +1,14 @@
 <?php
-require_once("./head.php");
+require_once(realpath(__DIR__."/templates/head.php"));
 
 session_start();
 if(!empty($_POST)){
 
   if(isset($_POST["login"])){
     $userInfo = $user->getUser($_POST["username"]);
-    if(!$userInfo) $alertLogin = "La contraseña o el usuario no coinciden";
+    if(!$userInfo) $alertLogin = "La contraseña o el usuario no coinciden o son incorrectos";
     else{
-      if (password_verify($_POST["password"], $userInfo["password"])) {
+      if (password_verify($_POST["login-password"], $userInfo["password"])) {
         $username = $userInfo["user"];
         $_SESSION["username"] = $username;
         $_SESSION["logged"] = 1;
@@ -37,12 +37,12 @@ if(!empty($_POST)){
     <?php if(isset($alertLogin)) echo "<div class='alert redAlert'> $alertLogin </div>"; ?>
     <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="post" class="loginContainer" id="formLogin">
       <div class="ilContainerCol loginInput">
-        <label for="username" class="smText white">Username or email</label>
+        <label for="username" class="smText white">Phone or email</label>
         <input type="text" name="username" id="username" class="inputText" required>
       </div>
       <div class="ilContainerCol loginInput">
-        <label for="password" class="smText white">Password</label>
-        <input type="password" name="password" id="password" class="inputText" required>
+        <label for="login-password" class="smText white">Password</label>
+        <input type="password" name="login-password" id="login-password" class="inputText" required>
       </div>
       <div class="ilContainerCol loginInput">
         <label for="remember" class="smText white">Remember me</label>
@@ -74,12 +74,15 @@ if(!empty($_POST)){
   <section>
     <h2 class="bgText white bold">Sign Up</h2>
     <?php if (isset($ban) && $ban <= 0) echo "<div class='alert redAlert'> $alertSign </div>"; ?>
-    <form action="" method="post" class="registerContainer" id="registerForm">
-      <div class="twoInputContainerRow">
+    <form action="<php echo $_SERVER['PHP_SELF'] ?>" method="post" class="registerContainer" id="registerForm">
+      <div>
         <input type="text" name="username" id="username" placeholder="Type a username" class="inputText" required>
+      </div>
+      <div class="twoInputContainerRow">
+        <input type="tel" name="phone" id="phone" placeholder="Enter a phone number" class="inputText" required>
         <input type="email" name="email" id="email" placeholder="Type a email" class="inputText" required>
       </div>
-      <div>
+      <div class="twoInputContainerRow">
         <input type="password" name="password" id="password" placeholder="Type a password" class="inputText" required>
       </div>
       <div>
@@ -93,4 +96,4 @@ if(!empty($_POST)){
   </section>
 </main>
 
-<?php require_once("./footer.php"); ?>
+<?php require_once(realpath(__DIR__."/templates/footer.php")); ?>

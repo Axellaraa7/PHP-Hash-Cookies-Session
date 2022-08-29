@@ -1,0 +1,19 @@
+-- DROP DATABASE IF EXISTS db_php;
+
+-- CREATE DATABASE db_php;
+
+USE db_php;
+
+DROP TABLE IF EXISTS users;
+
+create table users(
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  user VARCHAR(100) NOT NULL,
+  email VARCHAR(100) NOT NULL,
+  phone VARCHAR(20) NOT NULL,
+  password VARCHAR(100) NOT NULL,
+  register TIMESTAMP DEFAULT NOW(),
+  updated TIMESTAMP DEFAULT NULL ON UPDATE NOW(),
+  CONSTRAINT u_email UNIQUE (email),
+  CONSTRAINT u_phone UNIQUE (phone)
+)

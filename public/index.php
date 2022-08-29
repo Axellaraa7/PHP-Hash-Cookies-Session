@@ -1,5 +1,5 @@
 <?php 
-require_once("./head.php");
+require_once(realpath(__DIR__."/templates/head.php"));
 
 session_start();
 
@@ -11,7 +11,7 @@ if (isset($_GET["logout"]) && $_GET["logout"] == true) {
 
 $username = (isset($_SESSION)) ? $_SESSION["username"] : ((isset($_COOKIE["username"])) ? $_COOKIE["username"] : "");
 
-// if($username == "") header("Location: ./login.php");
+if($username == "") header("Location: ./login.php");
 
 ?>
 <section class="logged">
@@ -19,4 +19,4 @@ $username = (isset($_SESSION)) ? $_SESSION["username"] : ((isset($_COOKIE["usern
   <a href="./index.php?logout=true" class="btn btnThird">Cerrar sesión</a>
 </section>
 
-<?php require_once("./footer.php"); ?>
+<?php require_once(realpath(__DIR__."/templates/footer.php")); ?>

@@ -1,10 +1,10 @@
 <?php 
 class User{
-  private $conexion,$table,$user,$email,$password;
+  private $conexion,$table;
 
   public function __construct($conexion){
     $this->conexion = $conexion;
-    $this->table = "loginphp";
+    $this->table = "users";
   }
 
   public function insertUser($datos){
