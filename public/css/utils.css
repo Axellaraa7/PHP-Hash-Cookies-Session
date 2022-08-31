@@ -1,0 +1,129 @@
+*{
+  margin: 0;
+  padding: 0;
+  font-family: "Cabinet Grotesk", sans-serif;
+  font-size: .625rem; 
+  box-sizing: border-box;
+}
+
+:root{
+  --main: hsla(259,70%,6%,1);
+  --sec: hsla(256,100%,15%,1);
+  --third: hsla(273,100%,22%,1);
+  --fourth: hsla(279,100%,29%,1);
+  --white: hsla(0,0%,82%,1);
+  --red: hsla(0,100%,75%,1);
+  --red2: hsla(0,100%,35%,1);
+}
+
+body{
+  background: linear-gradient(45deg,var(--main),var(--sec)) center center no-repeat fixed;
+  min-width: 480px;
+}
+
+.bgsText{ font-size: 3rem; }
+
+.bgText{ font-size: 2.6rem; }
+
+.mdText{ font-size: 1.6rem; }
+
+.smText{ font-size: 1.4rem; }
+
+.white{ color: var(--white); }
+
+.bold{ font-weight: bold; }
+
+.ContainerFlexCol{
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.ContainerFlexRow{
+  display:flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 1rem;
+}
+
+.inputText{
+  width: 100%;
+  padding: .3rem;
+  font-size: 1.4rem;
+}
+
+.alert{
+  width: 100%;
+  padding: .5rem 1rem;
+  font-size: 1.2rem;
+  border-radius: 5px;
+}
+
+.redAlert{
+  border: 2px solid var(--red2);
+  background-color: var(--red);
+  color: var(--red2);
+}
+
+.btn{
+  position: relative;
+  padding: .75rem 1.5rem;
+  font-size: 1.6rem;
+  border-radius: 5px;
+  cursor: pointer;
+  z-index: 1;
+  border: none;
+}
+
+.btn::before{
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: calc(50% - 2px);
+  width: 0;
+  height: 100%;
+  border-radius: 5px 0 0 5px;
+  border-top: 2px solid transparent;
+  border-bottom: 2px solid transparent;
+  border-left: 2px solid transparent;
+  transition: all .3s ease 0s;
+  z-index: -1;
+}
+
+.btn::after{
+  content: "";
+  position: absolute;
+  top: -2px;
+  right: calc(50% - 2px);
+  width: 0;
+  height: 100%;
+  border-radius: 0 5px 5px 0;
+  border-top: 2px solid transparent;
+  border-bottom: 2px solid transparent;
+  border-right: 2px solid transparent;
+  transition: all .3s ease 0s;
+  z-index: -1;
+}
+
+.btnThird{
+  background-color: transparent;
+  color: var(--white);
+  text-decoration: underline;
+}
+
+.btnThird:hover{
+  color: var(--white);
+}
+
+.btnThird:hover::before{
+  width: 50%;
+  left: -2px;
+  border-color: var(--white);
+}
+
+.btnThird:hover::after{
+  width: 50%;
+  right: -2px;
+  border-color: var(--white);
+}

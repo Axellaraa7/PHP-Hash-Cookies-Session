@@ -20,7 +20,7 @@ if(!empty($_POST)){
 
   if(isset($_POST["signup"])){
     $ban = $user->insertUser($_POST);
-    if($ban === -1) $alertSign = "El nombre de usuario o el email no están disponibles";
+    if($ban === -1) $alertSign = "El telefono o el email no están disponibles";
     else if($ban === 0) $alertSign = "Ocurrió un error al ingresar el usuario";
     else{
       $_SESSION["username"] = $_POST["username"];
@@ -36,19 +36,19 @@ if(!empty($_POST)){
   <section>
     <?php if(isset($alertLogin)) echo "<div class='alert redAlert'> $alertLogin </div>"; ?>
     <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="post" class="loginContainer" id="formLogin">
-      <div class="ilContainerCol loginInput">
+      <div class="ContainerFlexCol loginInput">
         <label for="username" class="smText white">Phone or email</label>
         <input type="text" name="username" id="username" class="inputText" required>
       </div>
-      <div class="ilContainerCol loginInput">
+      <div class="ContainerFlexCol loginInput">
         <label for="login-password" class="smText white">Password</label>
         <input type="password" name="login-password" id="login-password" class="inputText" required>
       </div>
-      <div class="ilContainerCol loginInput">
+      <div class="ContainerFlexCol loginInput">
         <label for="remember" class="smText white">Remember me</label>
         <input type="checkbox" name="remember" id="remember" class="inputBox">
       </div>
-      <div class="ilContainerCol loginInput">
+      <div class="ContainerFlexCol loginInput">
         <input type="hidden" name="login" value="true">
         <button class="btn btnThird">Log In</button>
       </div>
@@ -74,15 +74,17 @@ if(!empty($_POST)){
   <section>
     <h2 class="bgText white bold">Sign Up</h2>
     <?php if (isset($ban) && $ban <= 0) echo "<div class='alert redAlert'> $alertSign </div>"; ?>
-    <form action="<php echo $_SERVER['PHP_SELF'] ?>" method="post" class="registerContainer" id="registerForm">
-      <div>
+    <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post" class="registerContainer" id="registerForm">
+      <div class="ContainerFlexRow">
         <input type="text" name="username" id="username" placeholder="Type a username" class="inputText" required>
-      </div>
-      <div class="twoInputContainerRow">
-        <input type="tel" name="phone" id="phone" placeholder="Enter a phone number" class="inputText" required>
         <input type="email" name="email" id="email" placeholder="Type a email" class="inputText" required>
       </div>
-      <div class="twoInputContainerRow">
+      <div class="ContainerFlexRow">
+        <select name="dial" id="dial" class="dial smText" required>
+        </select>
+        <input type="tel" name="phone" id="phone" placeholder="Enter a phone number" class="inputText" required>
+      </div>
+      <div>
         <input type="password" name="password" id="password" placeholder="Type a password" class="inputText" required>
       </div>
       <div>

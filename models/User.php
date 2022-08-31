@@ -8,34 +8,36 @@ class User{
   }
 
   public function insertUser($datos){
-    if(!$this->verifyUsername($datos["username"]) || !$this->verifyEmail($datos["email"])) return -1;
+    $arr = explode("-",$datos["dial"]);
+    $datos["country"] = $arr[0];
+    $datos["dial"] = $arr[1];
 
-    $query = $this->conexion->prepare("INSERT INTO $this->table (user,email,password) VALUES (?,?,?);");
-    $banExecute = $query->execute(array($datos["username"],$datos["email"],password_hash($datos["password"],PASSWORD_DEFAULT)));
+    if($this->existPhone($datos["phone"]) || $this->existEmail($datos["email"])) return -1;
+
+    $query = $this->conexion->prepare("INSERT INTO $this->table (user,email,country,dial,phone,password) VALUES (?,?,?,?,?,?);");
+    $banExecute = $query->execute(array($datos["username"],$datos["email"],$datos["country"],$datos["dial"],$datos["phone"],password_hash($datos["password"],PASSWORD_DEFAULT)));
+    
     if(!$banExecute) return 0;
     return 1;
   }
 
   public function getUser($username){
-    $user = ($this->verifyUsername($username) || $this->verifyEmail($username)) ? true : false;
-    $banExecute = false;
-    if($user){
-      $query = $this->conexion->prepare("SELECT user,password FROM $this->table WHERE user = ? OR email = ?");
-      $banExecute = $query->execute(array($username,$username));
-    }
-    return ($user && $banExecute) ? $query->fetch(PDO::FETCH_ASSOC) : $user;
+    if(!$this->existPhone($username) && !$this->existEmail($username)) return false;
+
+    $query = $this->conexion->prepare("SELECT user,password FROM $this->table WHERE phone = ? OR email = ?");
+    return ($query->execute(array($username,$username))) ? $query->fetch(PDO::FETCH_ASSOC) : false;
   }
 
-  private function verifyUsername($username){
-    $query = $this->conexion->prepare("SELECT count(*) FROM $this->table WHERE user = ?");
-    $banExecute = $query->execute(array($username));
-    return ($query->fetchColumn() > 0 || !$banExecute) ? false : true;
+  private function existPhone($phone){
+    $query = $this->conexion->prepare("SELECT count(*) FROM $this->table WHERE phone = ?");
+    $banExecute = $query->execute(array($phone));
+    return ($query->fetchColumn() > 0 && $banExecute) ? true : false;
   }
   
-  private function verifyEmail($email){
+  private function existEmail($email){
     $query = $this->conexion->prepare("SELECT count(*) FROM $this->table WHERE email = ?");
     $banExecute = $query->execute(array($email));
-    return ($query->fetchColumn() > 0 || !$banExecute) ? false : true;
+    return ($query->fetchColumn() > 0 && $banExecute) ? true : false;
   }
 }
 ?>

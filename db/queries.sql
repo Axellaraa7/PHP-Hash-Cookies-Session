@@ -10,6 +10,8 @@ create table users(
   id INT AUTO_INCREMENT PRIMARY KEY,
   user VARCHAR(100) NOT NULL,
   email VARCHAR(100) NOT NULL,
+  country CHAR(2) NOT NULL,
+  dial VARCHAR(10) NOT NULL,
   phone VARCHAR(20) NOT NULL,
   password VARCHAR(100) NOT NULL,
   register TIMESTAMP DEFAULT NOW(),
